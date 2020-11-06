@@ -52,13 +52,18 @@ function drawBall(xCo, yCo, speedXCo, speedYCo) {
     }
 
     if (selectedNote) {
-        synth = new Tone.Synth().toDestination();
+        console.log();
+        let hw = width / 2;
+        pan = new Tone.Panner((xCo - hw) / hw);
+        console.log((yCo - hw) / hw);
+        synth = new Tone.Synth();
+        synth.connect(pan);
+        pan.toDestination();
+
         synth.triggerAttackRelease(`${mapNumberToNote(selectedNote.note)}${octave}`, "8n");
         synth = null;
     }
 
-
-    // Display circle at x location
     stroke(0);
     fill(175);
     ellipse(xCo, yCo, radius, radius);
@@ -66,7 +71,7 @@ function drawBall(xCo, yCo, speedXCo, speedYCo) {
 }
 
 function mousePressed() {
-    if(mouseX > 0 && mouseX < width && mouseY > 0 && mouseY < height) {
+    if (mouseX > 0 && mouseX < width && mouseY > 0 && mouseY < height) {
         let xRand = random([-1, 1]);
         let yRand = random([-1, 1]);
         circles.push({ x: mouseX, y: mouseY, speedX: xRand * speedX, speedY: yRand * speedY });
