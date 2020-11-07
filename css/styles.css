@@ -7,21 +7,43 @@ html {
     font-family: 'Raleway', sans-serif;
 }
 
+#splash {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+
+    backdrop-filter: blur(15px);
+    z-index: 10;
+
+    display:flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+
+}
+
 body, html {
     margin: 0;
     padding: 0;
+    width: 100vw;
+    height: 100vh;
+
 }
 
-body {
-    background: url(./../assets/1.jpg);
-    background-repeat: no-repeat;
-    background-size: 100vw 100vh;
+h1 {
+    font-weight: 200;
+    font-size: 5rem;
 }
 
 .cnt {
     width: 100vw;
     height: 100vh;
     display: flex;
+    background: url(./../assets/1.jpg);
+    background-repeat: no-repeat;
+    background-size: 100vw 100vh;
     flex-direction: column;
     justify-content: space-between;
 }
@@ -35,6 +57,7 @@ main {
     /* border: 2px solid slategrey; */
     border-radius: 8px;
     box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    z-index: 5;
 }
 
 .bottom {
