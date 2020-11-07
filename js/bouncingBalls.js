@@ -5,7 +5,7 @@ circles = [];
 splittedWidth = [];
 splittedHeight = [];
 notes = (new Array(12)).fill(1).map((v, i) => v = +i + 1);
-octave = '4';
+octave = '3';
 
 function setup() {
     createCanvas(1200, 600);
@@ -25,7 +25,8 @@ function setup() {
 }
 
 function draw() {
-    background(220);
+    background(255, 0   );
+    clear();
     for (i = 0; i < circles.length; i++) {
         // console.warn(circles[i]);
         circles[i] = drawBall(circles[i].x, circles[i].y, circles[i].speedX, circles[i].speedY);
@@ -53,14 +54,18 @@ function drawBall(xCo, yCo, speedXCo, speedYCo) {
 
     if (selectedNote) {
         console.log();
-        let hw = width / 2;
-        pan = new Tone.Panner((xCo - hw) / hw);
-        console.log((yCo - hw) / hw);
-        synth = new Tone.Synth();
-        synth.connect(pan);
-        pan.toDestination();
+        // let hw = width / 2;
+        // pan = new Tone.Panner((xCo - hw) / hw);
+        // console.log((yCo - hw) / hw);
+        // synth = new Tone.Synth();
+        // synth.connect(pan);
+        // pan.toDestination();
 
-        synth.triggerAttackRelease(`${mapNumberToNote(selectedNote.note)}${octave}`, "8n");
+        let hw = width / 2;
+        pan = (xCo - hw) / hw
+
+        let synth = winterSynth(pan);
+        synth.triggerAttackRelease(`${mapNumberToNoteWinterAirport(selectedNote.note, octave)}`, "4n");
         synth = null;
     }
 

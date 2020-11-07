@@ -1,7 +1,21 @@
 
+html {
+    box-sizing: border-box;
+}
+*, *:before, *:after {
+    box-sizing: inherit;
+    font-family: 'Raleway', sans-serif;
+}
+
 body, html {
     margin: 0;
     padding: 0;
+}
+
+body {
+    background: url(./../assets/1.jpg);
+    background-repeat: no-repeat;
+    background-size: 100vw 100vh;
 }
 
 .cnt {
@@ -18,8 +32,27 @@ body, html {
 
 main {
     align-self: center;
+    /* border: 2px solid slategrey; */
+    border-radius: 8px;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
 }
 
 .bottom {
-    flex-grow: 1; 
+    margin: 3rem;
+    /* flex-grow: 1;  */
+    align-self: center;
+}
+
+button {
+    background: none;
+    border-radius: 8px;
+    border: none;
+    outline: none;
+    padding: 1rem;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.50);
+}
+
+button:hover, button:active {
+    border-radius: 4px;
+    cursor: pointer;
 }
