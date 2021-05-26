@@ -1,13 +1,16 @@
-speedX = 2;
-speedY = 3;
-circles = [];
-splittedWidth = [];
-splittedHeight = [];
-notes = (new Array(12)).fill(1).map((v, i) => v = +i + 1);
-octave = '3';
-timePressed = 0;
-MIN_RADIUS = 4;
-MAX_RADIUS = 100;
+import { winterSynth } from "./synthsFactory";
+import { mapNumberToNoteWinterAirport, signum } from "./utils";
+import { OCTAVE, MIN_RADIUS, MAX_RADIUS, MIN_SPEED_X, MIN_SPEED_Y, MAX_SPEED_X, MAX_SPEED_Y, SPEED_INCREMENT } from "./constants";
+
+
+let speedX = MIN_SPEED_X;
+let speedY = MIN_SPEED_Y;
+let circles = [];
+const splittedWidth = [];
+const splittedHeight = [];
+let notes = (new Array(12)).fill(1).map((v, i) => v = +i + 1);
+let timePressed = 0;
+let synth = [];
 
 function setup() {
     createCanvas(1200, 600);
@@ -29,13 +32,13 @@ function setup() {
 function draw() {
     background(255, 0);
     clear();
-    for (i = 0; i < circles.length; i++) {
+    for (let i = 0; i < circles.length; i++) {
         // console.warn(circles[i]);
-        circles[i] = drawBall(circles[i].x, circles[i].y, circles[i].speedX, circles[i].speedY, circles[i].radius);
+        circles[i] = drawBall(circles[i].x, circles[i].y, circles[i].speedX, circles[i].speedY, circles[i].radius, i);
     }
 }
 
-function drawBall(xCo, yCo, speedXCo, speedYCo, radiusCo) {
+function drawBall(xCo, yCo, speedXCo, speedYCo, radiusCo, index) {
     // Add the current speed to the x location.
     xCo = xCo + speedXCo;
     yCo = yCo + speedYCo
@@ -56,10 +59,13 @@ function drawBall(xCo, yCo, speedXCo, speedYCo, radiusCo) {
 
     if (selectedNote) {
         let hw = width / 2;
-        pan = (xCo - hw) / hw;
+        let pan = (xCo - hw) / hw;
 
-        synth = winterSynth(pan, map(radiusCo, MIN_RADIUS, MAX_RADIUS, -6, 0));
-        synth.triggerAttackRelease(`${mapNumberToNoteWinterAirport(selectedNote.note, octave)}`, "4n");
+        if (synth.length === 0 || Math.floor(index / 32) === synth.length) {
+            synth.push(winterSynth(pan, map(radiusCo, MIN_RADIUS, MAX_RADIUS, -6, 0)));
+            console.log(`Added synth ${Math.floor(index / 32)}; ${synth}`);
+        }
+        synth[Math.floor(index / 32)].triggerAttackRelease(`${mapNumberToNoteWinterAirport(selectedNote.note, OCTAVE)}`, "4n");
     }
 
     stroke(0, 120);
@@ -92,5 +98,33 @@ function mouseReleased() {
 
 function resetBalls() {
     circles = [];
-    synthArray = [];
+    synth = [];
 }
+
+function increaseSpeed() {
+    circles.forEach((v, i, a) => {
+        a[i].speedX = signum(v.speedX) * min(abs(v.speedX) + SPEED_INCREMENT, MAX_SPEED_X);
+        a[i].speedY = signum(v.speedY) * min(abs(v.speedX) + SPEED_INCREMENT, MAX_SPEED_Y);
+        console.log(v.speedX, v.speedY);
+    })
+    speedX = min(speedX + SPEED_INCREMENT, MAX_SPEED_X);
+    speedY = min(speedY + SPEED_INCREMENT, MAX_SPEED_Y);
+}
+
+function decreaseSpeed() {
+    circles.forEach((v, i, a) => {
+        a[i].speedX = signum(v.speedX) * max(abs(v.speedX) - SPEED_INCREMENT, MIN_SPEED_X);
+        a[i].speedY = signum(v.speedY) * max(abs(v.speedX) - SPEED_INCREMENT, MIN_SPEED_Y);
+        console.log(v.speedX, v.speedY);
+    })
+    speedX = max(speedX - SPEED_INCREMENT, MIN_SPEED_X);
+    speedY = max(speedY - SPEED_INCREMENT, MIN_SPEED_Y);
+}
+
+window.setup = setup;
+window.draw = draw;
+window.mousePressed = mousePressed;
+window.mouseReleased = mouseReleased;
+window.resetBalls = resetBalls;
+window.increaseSpeed = increaseSpeed;
+window.decreaseSpeed = decreaseSpeed;

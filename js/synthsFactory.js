@@ -1,3 +1,5 @@
+import * as Tone from 'tone';
+
 const reverb = new Tone.Reverb({
     decay: 15,
     wet: 0.5
@@ -6,17 +8,15 @@ let tVolume = null;
 let tFilter = null;
 let tPan = null;
 
-synthArray = [];
 
-const winterSynth = (panning, vol) => {
-    console.log(vol);
-    tVolume = new Tone.Volume(vol);
-    tPan = new Tone.Panner(panning);
+export const winterSynth = (panning, vol) => {
+    let tVolume = new Tone.Volume(vol);
+    let tPan = new Tone.Panner(panning);
     
-    synth = new Tone.Synth({
+    let synth = new Tone.PolySynth({
         envelope: { release: 2 }
     });
-    tFilter = new Tone.Filter(800, "lowpass");
+    let tFilter = new Tone.Filter(800, "lowpass");
 
     synth.connect(tVolume);
     tVolume.connect(tFilter);
@@ -27,7 +27,7 @@ const winterSynth = (panning, vol) => {
     return synth;
 }
 
-const disposeSynth = () => {
+export const disposeSynth = () => {
     tPan && tPan.dispose();
     tFilter && tFilter.dispose();
     tVolume && tVolume.dispose();

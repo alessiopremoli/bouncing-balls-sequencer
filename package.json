@@ -1,0 +1,27 @@
+{
+  "name": "bouncing-balls-sequencer",
+  "version": "1.0.0",
+  "description": "A `p5js` and `Tone.js` 2-dimensional sequencer that plays sounds when click-generated balls hit the borders.",
+  "main": "index.js",
+  "scripts": {
+    "dev": "vite",
+    "build": "rm -r ./dist && vite build",
+    "serve": "vite preview"
+  },
+  "devDependencies": {
+    "vite": "^2.3.4"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alessiopremoli/bouncing-balls-sequencer.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/alessiopremoli/bouncing-balls-sequencer/issues"
+  },
+  "homepage": "https://github.com/alessiopremoli/bouncing-balls-sequencer#readme",
+  "dependencies": {
+    "tone": "^14.7.77"
+  }
+}

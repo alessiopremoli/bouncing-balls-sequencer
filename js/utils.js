@@ -1,4 +1,4 @@
-function mapNumberToNote(number) {
+export function mapNumberToNote(number) {
     switch (number) {
         case 1:
             return 'C';
@@ -29,7 +29,7 @@ function mapNumberToNote(number) {
     }
 };
 
-function mapNumberToNoteWinterAirport(number, octave) {
+export function mapNumberToNoteWinterAirport(number, octave) {
     switch (number) {
         case 1:
             return 'F' + (+octave - 1);
@@ -57,3 +57,5 @@ function mapNumberToNoteWinterAirport(number, octave) {
             return 'Ab' + (+octave + 1);
     }
 }
+
+export const signum = num => num / Math.abs(num)
